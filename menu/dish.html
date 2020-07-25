@@ -1,0 +1,22 @@
+{% extends 'menu/main.html' %}
+{% load static %}
+{% block content %}
+	{% include 'menu/preload.html' %}
+
+	{% include 'menu/subheader.html' %}
+
+
+    
+
+	<div class="container margin_60_35">
+		<div class="row">
+
+        
+			{% include 'menu/category.html' with categories=dishCategory %}
+			{% include 'menu/menu.html' with menu=context %}
+			
+			            
+     
+	</div><!-- End row -->
+</div><!-- End container -->
+{% endblock content %}
