@@ -1,0 +1,160 @@
+<!-- {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<h3>dish</h3>
+
+<img src="{% static 'images/logo_mobile.png' %}"> -->
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+	   	<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+	    <style>
+			ul#cat_nav li a:after {
+			    font-family: fontello;
+			    content: "\e89b";
+			    position: absolute;
+			    right: 15px;
+			    top: 15px;
+			}
+			#position ul li:first-child:before {
+			    content: "\eaf4";
+			    left: 0;
+			    color: #999;
+				display:none;
+			}
+			#position ul li:after {
+			    content: "\e9ee";
+			    right: 0;
+					display:none;
+			}
+			ul#cat_nav li a:after {
+			    font-family: fontello;
+			    content: "\e89b";
+			    position: absolute;
+			    right: 15px;
+			    top: 15px;
+					display:none;
+			}
+		</style>
+
+		    <!-- Favicons-->
+	    <link rel="shortcut icon" href="images/favicon.ico" type="Image/x-icon">
+	    <link rel="apple-touch-icon" type="image/x-icon" href="{% static 'images/apple-touch-icon-57x57-precomposed.png' %}">
+	    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="{% static 'Images/apple-touch-icon-72x72-precomposed.png' %}">
+	    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="{% static 'Images/apple-touch-icon-114x114-precomposed.png' %}">
+	    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="{% static 'Images/apple-touch-icon-144x144-precomposed.png' %}">
+	    
+	    <!-- GOOGLE WEB FONT -->
+	    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+
+	    <!-- BASE CSS -->
+	    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/menu.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/elegant_font.min.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/fontello.min.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/pop_up.css' %}" rel="stylesheet">
+	    
+	     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	    <!-- Radio and check inputs -->
+	    <link href="{% static 'css/grey.css' %}" rel="stylesheet">
+	    <script type="text/javascript">
+    		function getToken(name) {
+		    let cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        const cookies = document.cookie.split(';');
+		        for (let i = 0; i < cookies.length; i++) {
+		            const cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			                break;
+			            }
+			        }
+			    }
+			    return cookieValue;
+			}
+			const csrftoken = getToken('csrftoken');
+
+			function getCookie(name) {
+			    let cookieValue = null;
+			    if (document.cookie && document.cookie !== '') {
+			        const cookies = document.cookie.split(';');
+			        for (let i = 0; i < cookies.length; i++) {
+			            const cookie = cookies[i].trim();
+			            // Does this cookie string begin with the name we want?
+			            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+			                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				                break;
+				            }
+				        }
+				    }
+			    	return cookieValue;
+			}
+			var cart = JSON.parse(getCookie('cart'));
+			if(cart == undefined){
+				cart = {}
+				// console.log('Cart was created')
+				document.cookie = 'cart='+ JSON.stringify(cart) +";domain=;path=/"
+			}
+			// console.log(cart)
+	    </script>
+
+     </head>
+     <body>
+
+            {% block content %}
+
+
+            {% endblock content %}
+
+            <!-- COMMON SCRIPTS -->
+		<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+		<script src="{% static 'js/common_scripts_min.js' %}"></script>
+		<script src="{% static 'js/functions.js' %}"></script>
+		<script src="{% static 'js/validate.js' %}"></script>
+
+		<!-- SPECIFIC SCRIPTS -->
+		<script  src="js/cat_nav_mobile.js"></script>
+		<script>$('#cat_nav').mobileMenu();</script>
+		<script src="js/ResizeSensor.min.js"></script>
+		<script src="js/theia-sticky-sidebar.min.js"></script>
+		<script>
+		    jQuery('#sidebar').theiaStickySidebar({
+		      additionalMarginTop: 80
+		    });
+		</script>
+		<!-- SMOOTH SCROLL -->
+		<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/orderTable.js' %}"></script>
+		<script>
+			$('#cat_nav a[href^="#"]').click(function() {
+				if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+					|| location.hostname == this.hostname) {
+					var target = $(this.hash);
+					target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+					   if (target.length) {
+						 $('html,body').animate({
+							 scrollTop: target.offset().top -75
+						}, 800);
+						return false;
+					}
+				}
+			});
+		</script>
+     </body>
+</html>
+
+
+
+
+

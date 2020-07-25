@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>web</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Data-Table-1.css">
+    <link rel="stylesheet" href="assets/css/Data-Table.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div>
+        <h1>Order Invoice Table #&nbsp;: {{table}}</h1>
+    </div>
+    <div><table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%" style="border-bottom: solid 1px #000000; border-right: solid 1px #000000; border-left: solid 1px #000000;">
+        <thead>
+            <tr>
+                <th>Dish</th>
+                <th>Dish Modifications</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr style="padding-top:2px">
+                <th>{{item.dish.dishName}}</th>
+                <th style="overflow-wrap: anywhere">{{item.comments}}</th>
+                <th>{{item.quantity}}</th>
+                <th>{{item.dish.distPrice}}</th>
+                <th>{{item.totalPrice}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table></div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+</body>
+
+</html>

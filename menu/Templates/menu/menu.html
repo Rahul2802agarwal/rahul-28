@@ -1,0 +1,62 @@
+{% load filter %}
+{% load static %}
+<div class="col-md-6">
+				<div class="box_style_2" id="main_menu">
+                    <h2 class="inner">Menu</h2>
+                    {% for category in dishCategory %}
+                        <h3 class="nomargin_top" id="{{category|lower}}">{{category}}</h3>
+                        <table class="table table-striped cart-list">
+                            <thead>
+                                <tr>
+                                    <th>
+                                         Item
+                                    </th>
+                                    <th>
+                                         Price
+                                    </th>
+                                    <th>
+                                         Order
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dish in  dishs|hash:category  %}
+                                <tr>
+                                        <td>
+                                            <figure class="thumb_menu_list"><img src="{{dish.imageURL}}" alt="thumb"></figure>
+                                            <h5>{{dish.dishName}}</h5>
+                                            <p>
+                                                {{dish.dishDescription}}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <strong>$ {{dish.distPrice}}</strong>
+                                        </td>
+                                        <td class="options">
+                                        <div class="dropdown dropdown-options">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-plus-circle"></i></a>
+                                            <div class="dropdown-menu">
+                                                <h5>Quantity</h5>
+                                                <label>
+                                                <input type="number" id="dishQuantity_{{dish.dishId}}">
+                                                </label>
+                                                <h5>Dish modification</h5>
+                                                <label>
+                                                <textarea id="comment_{{dish.dishId}}" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+                                                </label>
+                                                <!-- <a href="#0" class="add_to_basket">Add to cart</a> -->
+                                                <button data-dish="{{dish.dishId}}" data-action='add' class='btn-outline-secondary add-btn update-cart'>Add to Cart</button>
+                                                <a href="{% url 'cart' %}" class="add_to_basket">View cart</a>
+                                              </div>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div><!-- End box_style_1 -->
+            </div><!-- End col-md-6 -->
+					
+				

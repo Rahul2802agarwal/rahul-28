@@ -1,0 +1,11 @@
+{% load static %}
+<div class="col-md-3">
+	<div class="box_style_1">
+		<ul id="cat_nav">
+			{% for category in categories %}
+			   <li><a href="#{{category|lower}}" class="active">{{category}} </a></li>
+			{% endfor %}
+		</ul>
+	</div><!-- End box_style_1 -->
+
+</div><!-- End col-md-3 -->
