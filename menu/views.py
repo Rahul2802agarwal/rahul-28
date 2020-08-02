@@ -12,10 +12,12 @@ from django import template
 from reportlab.pdfgen import canvas
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
+from django.shortcuts import redirect
+# from django.http import HttpResponseRedirect
 
 register = template.Library()
 
-def email(request):
+def email(request,table):
 	cart = json.loads(request.COOKIES['cart'])
 	items = []
 	order = {'get_cart_total':0,'get_cart_items':0,'is_ordered':False}
@@ -38,7 +40,6 @@ def email(request):
 						},
 						'quantity':int(cart[i]['quantity']),
 						'comments':cart[i]['dishComments'],
-						'table_number': cart['table_number'],
 						'totalPrice': (int(cart[i]['quantity']) *dish.distPrice)
 
 					}
@@ -47,7 +48,7 @@ def email(request):
 			pass
 		order['is_ordered'] = False
 
-	context = {'items':items, 'order':order,'table':cart['table_number']}
+	context = {'items':items, 'order':order,'table': table}
 	email = 'aggarwal1997rahul@gmail.com'
 	# email = 'siddharth16sharma@gmail.com'
 	subject = 'Order Detail'
@@ -58,17 +59,13 @@ def email(request):
 	email = EmailMessage(subject,message,email_from,recipient_list)
 	post_pdf = render_to_pdf('menu/invoice.html',context)
 	pdfData = HttpResponse(post_pdf, content_type='application/pdf')
-	print(pdfData)
-	print(type(pdfData))
 	# print(post_pdf.pdf.read())
 	# send_pdf = pdf(request)
 	# print(send_pdf)
 	# base_dir = 'media/documents/'
 	# email.attach_file(send_pdf)
 	email.attach('file.pdf', post_pdf, 'application/pdf')
-	print(type(post_pdf))
-	print('--------------------------------')
-	email.send()
+	# email.send()
 	# return HttpResponse('Order is placed')
 	return pdfData
 
@@ -133,15 +130,10 @@ def menu(request):
 	return render(request, "menu/dish.html", context)
 
 def cart(request):
-	# # customer = request.user.name
-	# order,created =  Order.objects.get_or_create( is_ordered=False)
-	# items = order.orderdish_set.all()
-	
 	try:
 		cart = json.loads(request.COOKIES['cart'])
 	except:
 		cart ={}
-	# print('cart:',cart)
 	items = []
 	order = {'get_cart_total':0,'get_cart_items':0,'is_ordered':False}
 	cartItems = []
@@ -152,8 +144,6 @@ def cart(request):
 		try:
 			print(cart[i])
 			dish = Dish.objects.get(dishId=i)
-
-			
 			total =  (dish.distPrice * int(cart[i]['quantity']))
 			order['get_cart_total'] += total
 			order['get_cart_items'] += int(cart[i]['quantity'])
@@ -170,16 +160,10 @@ def cart(request):
 						'quantity':int(cart[i]['quantity'])
 
 					}
-			print('----------------------------------')
-			print(item)
-			print('------end----------------------')
 			items.append(item)
 		except:
 			pass
 		order['is_ordered'] = False
-		# print('----------------------------------')
-		# print(items)
-		# print('------end----------------------')
 	context = {'items':items, 'order':order}
 	return render(request, "menu/cart.html", context)
 		
@@ -212,3 +196,55 @@ def updateItem(request):
 	return JsonResponse('Item was added', safe=False)
 
 
+def form(request):
+	return render(request, "menu/form.html")
+
+def saveDetails(request, customer):
+	order = Order()
+	order.customer = customer
+	order.is_ordered = True
+	order.save()
+
+	cart = json.loads(request.COOKIES['cart'])
+	for i in  cart:
+		try:
+			dish = Dish.objects.get(dishId=i)
+			orderDish =  OrderDish.objects.create(order=order, dish=dish)
+			orderDish.ordered = True
+			orderDish.quantity = int(cart[i]['quantity'])
+			orderDish.comments = cart[i]['dishComments']
+			orderDish.save()
+		except:
+			pass
+
+
+
+
+def formSubmit(request):
+
+	if request.method == 'POST':
+		name  = request.POST.get('cusName')
+		phone  = request.POST.get('cusPhone')
+		table = request.POST.get('cusTable')
+		customer = Customer()
+		tableNumber = request.POST['table']
+		customer.table_number = request.POST['table']
+		customer.name = request.POST['name']
+		customer.phone = request.POST['phone']
+		
+
+		customer.save()
+		saveDetails(request,customer)
+		# print(customer)
+		sendEmail = email(request, tableNumber)
+		
+		return sendEmail
+		# create a form instance and populate it with data from the request:
+		# check whether it's valid:
+		# print(form)
+		# if form.is_valid():
+		# 	# process the data in form. as required
+		# 	# redirect to a new URL:
+		# 	return HttpResponseRedirect('/thanks/')
+	# if a GET (or any other method) we'll create a blank form
+	return HttpResponse('Order is placed')

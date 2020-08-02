@@ -12,8 +12,8 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-
+	    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"> -->
+	    
 	    <style>
 			ul#cat_nav li a:after {
 			    font-family: fontello;
@@ -41,6 +41,47 @@
 			    top: 15px;
 					display:none;
 			}
+			#snackbar {
+			  visibility: hidden;
+			  min-width: 250px;
+			  margin-left: -125px;
+			  background-color: #136614;
+			  color: #fff;
+			  text-align: center;
+			  border-radius: 2px;
+			  padding: 16px;
+			  position: fixed;
+			  z-index: 1;
+			  left: 50%;
+			  bottom: 30px;
+			  font-size: 20px;
+			}
+
+			#snackbar.show {
+			  visibility: visible;
+			  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+			  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+			}
+
+			@-webkit-keyframes fadein {
+			  from {bottom: 0; opacity: 0;} 
+			  to {bottom: 30px; opacity: 1;}
+			}
+
+			@keyframes fadein {
+			  from {bottom: 0; opacity: 0;}
+			  to {bottom: 30px; opacity: 1;}
+			}
+
+			@-webkit-keyframes fadeout {
+			  from {bottom: 30px; opacity: 1;} 
+			  to {bottom: 0; opacity: 0;}
+			}
+
+			@keyframes fadeout {
+			  from {bottom: 30px; opacity: 1;}
+			  to {bottom: 0; opacity: 0;}
+			}
 		</style>
 
 		    <!-- Favicons-->
@@ -63,6 +104,8 @@
 	    <link href="{% static 'css/fontello.min.css' %}" rel="stylesheet">
 	    <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
 	    <link href="{% static 'css/pop_up.css' %}" rel="stylesheet">
+	    <link href="{% static 'css/addItemCart.css' %}" rel="stylesheet">
+	    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/addItemCart.css' %}"> -->
 	    
 	     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	    <!-- Radio and check inputs -->
@@ -116,6 +159,7 @@
 
 
             {% endblock content %}
+            <div id="snackbar">Item is added to the cart</div>
 
             <!-- COMMON SCRIPTS -->
 		<script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>

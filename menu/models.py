@@ -4,12 +4,13 @@ from django.contrib.auth.models import User
 
 
 class Customer(models.Model):
-    # phone = models.IntegerField()
     Id = models.AutoField(primary_key=True)
+    name =  models.CharField(max_length=50)
+    phone = models.IntegerField()
     table_number = models.IntegerField()
 
     def __str__(self):
-        return str(self.table_number)
+        return str(self.Id) +' '+ str(self.table_number)
 
 
 class Dish(models.Model):
@@ -57,7 +58,7 @@ class Order(models.Model):
 class OrderDish(models.Model):
     ordered = models.BooleanField(default=False)
     dish = models.ForeignKey(Dish, on_delete=models.SET_NULL, blank=True, null=True)
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
     def __str__(self):

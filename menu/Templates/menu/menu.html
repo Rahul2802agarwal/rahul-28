@@ -38,15 +38,15 @@
                                             <div class="dropdown-menu">
                                                 <h5>Quantity</h5>
                                                 <label>
-                                                <input type="number" id="dishQuantity_{{dish.dishId}}">
+                                                <input type="number" id="dishQuantity_{{dish.dishId}}" required value=0>
                                                 </label>
                                                 <h5>Dish modification</h5>
                                                 <label>
-                                                <textarea id="comment_{{dish.dishId}}" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+                                                <textarea id="comment_{{dish.dishId}}" name="subject" placeholder="Write something.." style="height:100px; width:100%"></textarea>
                                                 </label>
                                                 <!-- <a href="#0" class="add_to_basket">Add to cart</a> -->
-                                                <button data-dish="{{dish.dishId}}" data-action='add' class='btn-outline-secondary add-btn update-cart'>Add to Cart</button>
-                                                <a href="{% url 'cart' %}" class="add_to_basket">View cart</a>
+                                                <button data-dish="{{dish.dishId}}" data-action='add' class='btn-outline-secondary add-btn update-cart' style=" width:100%">Add to Cart</button>
+                                                <!-- <a href="{% url 'cart' %}" class="add_to_basket">View cart</a> -->
                                               </div>
                                             </div>
                                         </td>
@@ -58,5 +58,20 @@
                     {% endfor %}
                 </div><!-- End box_style_1 -->
             </div><!-- End col-md-6 -->
+        <div class="col-md-3" id="sidebar">
+            <div class="theiaStickySidebar">
+                <div id="cart_box" >
+                    <h3>Your order <i class="fa fa-shopping-cart"></i></h3>
+                    
+                    <!-- <a class="btn_full" href="#">Order now</a> -->
+                    <a href="{% url 'cart' %}" class="btn_full">View cart</a>
+                </div><!-- End cart_box -->
+                </div><!-- End theiaStickySidebar -->
+        </div><!-- End col-md-3 -->
+
+
+
+
+
 					
 				
