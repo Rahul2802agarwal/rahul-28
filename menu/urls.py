@@ -1,5 +1,11 @@
 from django.urls import path
+from django.contrib import admin
 from . import views
+
+
+admin.site.site_header = 'Admin Panel'
+admin.site.site_title  = 'admin title'
+admin.site.index_title = 'admin index title'
 
 urlpatterns = [
 	#Leave as empty string for base url
